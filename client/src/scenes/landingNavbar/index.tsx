@@ -17,7 +17,16 @@ import {
   Stack,
   Grid,
 } from "@mui/material";
-import { DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
+import {
+  Search,
+  Message,
+  DarkMode,
+  LightMode,
+  Notifications,
+  Help,
+  Menu,
+  Close,
+} from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout, setLogin } from "@/state/index.js";
 import { useNavigate, Link } from "react-router-dom";
@@ -80,7 +89,14 @@ const LandingNavbar = () => {
   const primaryColor = theme.palette.primary.main;
   const currentTheme = useContext(ThemeContext);
 
-  const [language, setLanguage] = React.useState("");
+  const [language, setLanguage] = React.useState(
+    localStorage.getItem("language") || navigator.language
+  );
+
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
+
   const handleChange = (event) => {
     setLanguage(event.target.value);
   };
@@ -103,9 +119,9 @@ const LandingNavbar = () => {
 
   return (
     <FlexBetween padding="0 1rem" backgroundColor={alt}>
-      <FlexBetween gap="4rem">
+      <FlexBetween>
         <Box sx={{ padding: 1 }}>
-          <Grid container>
+          <Grid display="flex" alignItems="center">
             <Box
               alignItems="center"
               display="flex"
@@ -146,12 +162,18 @@ const LandingNavbar = () => {
         </Box>
 
         {isNonMobileScreens && (
-          <FlexBetween gap="3rem" padding="0.1rem 1.5rem">
+          <FlexBetween>
             {/* MENU BAR */}
             <Stack direction="row" spacing={2}>
-              <Button href="#text-buttons">OUR SERVICES</Button>
-              <Button href="#text-buttons">APPLY FOR A JOB</Button>
-              <Button href="#text-buttons">CONTACT</Button>
+              <Button style={{ whiteSpace: "nowrap" }} href="#text-buttons">
+                OUR SERVICES
+              </Button>
+              <Button style={{ whiteSpace: "nowrap" }} href="#text-buttons">
+                APPLY FOR A JOB
+              </Button>
+              <Button style={{ whiteSpace: "nowrap" }} href="#text-buttons">
+                CONTACT
+              </Button>
             </Stack>
           </FlexBetween>
         )}
@@ -214,7 +236,7 @@ const LandingNavbar = () => {
         </IconButton>
       )}
       {/* MOBILE NAVBAR */}
-      {isNonMobileScreens && isMobileMenuToggled && (
+      {!isNonMobileScreens && isMobileMenuToggled && (
         <Box
           position="fixed"
           right="0"
@@ -223,7 +245,7 @@ const LandingNavbar = () => {
           zIndex="10"
           maxWidth="500px"
           minWidth="300px"
-          backgroundColor={background}
+          backgroundColor={alt}
         >
           {/* CLOSE ICON */}
           <Box display="flex" justifyContent="flex-end" p="1rem">
@@ -252,20 +274,42 @@ const LandingNavbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+            <FlexBetween>
+              {/* MENU BAR */}
+              <Stack>
+                <Button style={{ whiteSpace: "nowrap" }} href="#text-buttons">
+                  OUR SERVICES
+                </Button>
+                <Button style={{ whiteSpace: "nowrap" }} href="#text-buttons">
+                  APPLY FOR A JOB
+                </Button>
+                <Button style={{ whiteSpace: "nowrap" }} href="#text-buttons">
+                  CONTACT
+                </Button>
+              </Stack>
+            </FlexBetween>
 
             {/* ALGUS */}
-            <FormControl sx={{ m: 0, minWidth: 120 }}>
+            <FormControl variant="standard">
+              <InputLabel htmlFor="language-toggle">{t("language")}</InputLabel>
               <Select
-                value={i18next.language}
                 labelId="default-language"
                 id="language-toggle"
                 value={language}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
                 onChange={handleChange}
+                sx={{
+                  backgroundColor: neutralLight,
+                  borderRadius: "4px",
+                  p: "0.25rem 1rem",
+                  "& .MuiSvgIcon-root": {
+                    pr: "0.25rem",
+                    width: "3rem",
+                  },
+                  "& .MuiSelect-select:focus": {
+                    backgroundColor: neutralLight,
+                  },
+                }}
+                input={<InputBase />}
               >
                 {languages.map(({ code, name, country_code }) => (
                   <MenuItem
@@ -273,14 +317,17 @@ const LandingNavbar = () => {
                     key={country_code}
                     onClick={() => i18next.changeLanguage(code)}
                   >
-                    <span
-                      className={`flag-icon flag-icon-${country_code} mx-1`}
-                    ></span>
+                    <span className={`fi fi-${country_code} mx-1`}></span>
                     &nbsp;&nbsp;
                     {name}
                   </MenuItem>
                 ))}
               </Select>
+            </FormControl>
+            <FormControl variant="standard" value={fullName}>
+              <MenuItem onClick={() => navigate("/login")}>
+                {t("login")}
+              </MenuItem>
             </FormControl>
 
             {/* LÕPP */}
