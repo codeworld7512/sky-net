@@ -141,12 +141,12 @@ const LandingNavbar = () => {
             <Box
               display="flex"
               justifyContent="center"
-              sx={{ paddingTop: 0.4 }}
+              sx={{ paddingTop: 0.3 }}
             >
               <Typography
                 fontWeight="bold"
-                fontSize="clamp(1rem, 1.95rem, 2.25rem)"
-                color="primary"
+                fontSize="clamp(1rem, 1.88rem, 2.25rem)"
+                color="neutral.dark"
                 onClick={() => navigate("/home")}
                 sx={{
                   "&:hover": {
@@ -162,7 +162,7 @@ const LandingNavbar = () => {
         </Box>
 
         {isNonMobileScreens && (
-          <FlexBetween>
+          <FlexBetween padding="0 1rem">
             {/* MENU BAR */}
             <Stack direction="row" spacing={2}>
               <Button style={{ whiteSpace: "nowrap" }} href="#text-buttons">
