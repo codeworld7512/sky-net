@@ -49,7 +49,7 @@ const Navbar = () => {
     <FlexBetween padding="0 1rem" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
         <Box sx={{ padding: 1 }}>
-          <Grid container>
+          <Grid display="flex" alignItems="center">
             <Box
               alignItems="center"
               display="flex"
