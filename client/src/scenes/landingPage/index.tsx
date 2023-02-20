@@ -1,9 +1,9 @@
 /** @format */
 
-import { Box } from "@mui/material";
-import LandingNavbar from "@/scenes/landingNavbar";
-import FlexBetween from "@/components/FlexBetween";
-import LandingBody from "@/scenes/landingPage/LandingBody";
+import { Box } from '@mui/material'
+import LandingNavbar from '@/scenes/landingNavbar'
+import FlexBetween from '@/components/FlexBetween'
+import LandingBody from '@/scenes/landingPage/LandingBody'
 
 const LandingPage = () => {
   return (
@@ -13,7 +13,7 @@ const LandingPage = () => {
         <LandingBody />
       </Box>
     </div>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

@@ -10,3 +10,12 @@ body,
   font-weight: 500;
   font-size: 20px;
 } 
+
+.taust {
+  background-image: url("../assets/taust2.webp") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;	
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  height: 100vh;
+}

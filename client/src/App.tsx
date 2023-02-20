@@ -1,41 +1,39 @@
-/** @format */
-
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
-import HomePage from "@/scenes/homePage";
-import LandingPage from "@/scenes/landingPage";
-import LoginPage from "@/scenes/loginPage";
-import ProfilePage from "@/scenes/profilePage";
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
-import { themeSettings } from "./theme";
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import HttpApi from "i18next-http-backend";
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import HomePage from '@/scenes/homePage'
+import LandingPage from '@/scenes/landingPage'
+import LoginPage from '@/scenes/loginPage'
+import ProfilePage from '@/scenes/profilePage'
+import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
+import { themeSettings } from './theme'
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import HttpApi from 'i18next-http-backend'
 
 i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .use(HttpApi)
   .init({
-    supportedLngs: ["en", "ee", "fi", "swe", "nor", "rus", "ukr"],
-    fallbackLng: "en",
+    supportedLngs: ['en', 'ee', 'fi', 'swe', 'nor', 'rus', 'ukr'],
+    fallbackLng: 'en',
     detection: {
-      order: ["cookie", "htmlTag", "localStorage", "path", "subdomain"],
-      caches: ["cookie"],
+      order: ['cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],
+      caches: ['cookie'],
     },
     backend: {
-      loadPath: "/assets/translations/{{lng}}/translation.json",
+      loadPath: '/assets/translations/{{lng}}/translation.json',
     },
     react: { useSuspense: false },
-  });
+  })
 
 function App() {
-  const mode = useSelector((state) => state.mode);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  const isAuth = Boolean(useSelector((state) => state.token));
+  const mode = useSelector((state) => state.mode)
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode])
+  const isAuth = Boolean(useSelector((state) => state.token))
 
   return (
     <div className="app">
@@ -57,7 +55,7 @@ function App() {
         </ThemeProvider>
       </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
