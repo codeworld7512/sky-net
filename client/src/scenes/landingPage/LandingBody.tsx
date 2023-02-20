@@ -1,8 +1,8 @@
 import React from 'react'
 import { Container, Grid, Box, useMediaQuery } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import FlexBetween from '@/components/FlexBetween'
 import i18n from 'i18next'
+import FlexBetween from '@/components/FlexBetween'
 import ContactFormWidget from '@/scenes/widgets/ContactFormWidget'
 import LandingContentWidget from '@/scenes/widgets/LandingContentWidget'
 import PartnersWidget from '@/scenes/widgets/PartnersWidget'
@@ -19,7 +19,6 @@ function LandingBody() {
       display={isNonMobileScreens ? 'flex' : 'block'}
       gap="0.5rem"
       justifyContent="space-between"
-      className="taust"
     >
       <Box flexBasis={isNonMobileScreens ? '68%' : undefined}>
         <LandingContentWidget />

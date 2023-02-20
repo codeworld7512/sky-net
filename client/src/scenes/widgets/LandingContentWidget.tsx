@@ -9,22 +9,22 @@ import {
   Button,
   Grid,
 } from '@mui/material'
-import FlexBetween from '@/components/FlexBetween'
-import WidgetWrapper from '@/components/WidgetWrapper'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPost } from '@/state'
 import { useTranslation } from 'react-i18next'
 import i18next from 'i18next'
+import { setPost } from '@/state'
+import WidgetWrapper from '@/components/WidgetWrapper'
+import FlexBetween from '@/components/FlexBetween'
 import { ReactComponent as Deal } from '@/assets/deal.svg'
 
-const LandingContentWidget = () => {
+function LandingContentWidget() {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.token)
   const { t } = useTranslation()
 
   const { palette } = useTheme()
-  const main = palette.neutral.main
+  const { main } = palette.neutral
   const primary = palette.primary.main
 
   return (
@@ -51,6 +51,14 @@ const LandingContentWidget = () => {
             sx={{ fontWeight: 700, mb: 2 }}
           >
             {t('home_subheading')}
+          </Typography>
+          <Typography
+            variant="h1"
+            component="h1"
+            sx={{ fontWeight: 700, mb: 2 }}
+          >
+            Registreeri Äpis kiiresti ja lihtsalt, ning saa pakkumisi või leia
+            töötajaid.
           </Typography>
         </Box>
         <Box p="1rem 0" alignItems="center" justifyContent="center">

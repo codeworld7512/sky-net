@@ -1,17 +1,17 @@
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
-import HomePage from '@/scenes/homePage'
-import LandingPage from '@/scenes/landingPage'
-import LoginPage from '@/scenes/loginPage'
-import ProfilePage from '@/scenes/profilePage'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { createTheme } from '@mui/material/styles'
-import { themeSettings } from './theme'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpApi from 'i18next-http-backend'
+import { themeSettings } from './theme'
+import ProfilePage from '@/scenes/profilePage'
+import LoginPage from '@/scenes/loginPage'
+import LandingPage from '@/scenes/landingPage'
+import HomePage from '@/scenes/homePage'
 
 i18n
   .use(initReactI18next)
