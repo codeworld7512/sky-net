@@ -28,11 +28,11 @@ function LandingBody() {
         mt={isNonMobileScreens ? undefined : '2rem'}
       >
         <Box flexBasis="26%">
-          <PartnersWidget />
-          <Box m="2rem 0" />
           <ContactFormWidget />
           <Box m="2rem 0" />
           <TrustNumbersWidget />
+          <Box m="2rem 0" />
+          <PartnersWidget />
         </Box>
       </Box>
     </Box>

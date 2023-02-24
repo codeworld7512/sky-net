@@ -1,21 +1,21 @@
 /** @format */
-import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
-import { Box, Typography, Divider, useTheme, Button } from "@mui/material";
-import FlexBetween from "@/components/FlexBetween";
-import WidgetWrapper from "@/components/WidgetWrapper";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ReactComponent as Harju } from "@/assets/harju.svg";
-import { ReactComponent as Harmet } from "@/assets/harmet.svg";
+import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined'
+import { Box, Typography, Divider, useTheme, Button } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import WidgetWrapper from '@/components/WidgetWrapper'
+import FlexBetween from '@/components/FlexBetween'
+import { ReactComponent as Harju } from '@/assets/harju.svg'
+import { ReactComponent as Harmet } from '@/assets/harmet.svg'
 
 function PartnersWidget() {
-  const { palette } = useTheme();
-  const navigate = useNavigate();
-  const token = useSelector((state) => state.token);
-  const dark = palette.neutral.dark;
-  const medium = palette.neutral.medium;
-  const main = palette.neutral.main;
+  const { palette } = useTheme()
+  const navigate = useNavigate()
+  const token = useSelector((state) => state.token)
+  const { dark } = palette.neutral
+  const { medium } = palette.neutral
+  const { main } = palette.neutral
 
   return (
     <WidgetWrapper>
@@ -85,7 +85,7 @@ function PartnersWidget() {
         </Box>
       </Box>
     </WidgetWrapper>
-  );
+  )
 }
 
-export default PartnersWidget;
+export default PartnersWidget

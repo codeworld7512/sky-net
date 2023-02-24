@@ -119,31 +119,29 @@ function LandingNavbar() {
   //  `${user.firstName} ${user.lastName}`;
 
   return (
-    <FlexBetween padding="0 1rem" backgroundColor={alt}>
-      <FlexBetween>
-        <Box sx={{ padding: 1 }}>
-          <Grid display="flex" alignItems="center">
-            <Box
-              alignItems="center"
-              display="flex"
-              justifyContent="center"
-              sx={{ paddingTop: 1 }}
-            >
-              <Link to="/">
-                <SkynetLogo
-                  style={{
-                    fill: theme.palette.neutral.dark,
-                    stroke: theme.palette.neutral.dark,
-                    width: '45px',
-                  }}
-                />
-              </Link>
-            </Box>
+    <nav>
+      <FlexBetween padding="0 1rem" backgroundColor={alt}>
+        <FlexBetween>
+          <Box sx={{ padding: 1 }}>
             <Box
               display="flex"
               justifyContent="center"
               sx={{ paddingTop: 0.3 }}
             >
+              <Typography
+                fontWeight="bold"
+                fontSize="clamp(1rem, 1.88rem, 2.25rem)"
+                color="primary"
+                onClick={() => navigate('/')}
+                sx={{
+                  '&:hover': {
+                    color: primaryLight,
+                    cursor: 'pointer',
+                  },
+                }}
+              >
+                SKY
+              </Typography>
               <Typography
                 fontWeight="bold"
                 fontSize="clamp(1rem, 1.88rem, 2.25rem)"
@@ -156,141 +154,41 @@ function LandingNavbar() {
                   },
                 }}
               >
-                KYNET
+                NET
               </Typography>
             </Box>
-          </Grid>
-        </Box>
-
-        {isNonMobileScreens && (
-          <FlexBetween padding="0 1rem">
-            {/* MENU BAR */}
-            <Stack direction="row" spacing={2}>
-              <MenuItem style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
-                {t('menu_link_services')}
-              </MenuItem>
-              <MenuItem style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
-                {t('link_apply')}
-              </MenuItem>
-              <MenuItem style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
-                {t('link_contact')}
-              </MenuItem>
-            </Stack>
-          </FlexBetween>
-        )}
-      </FlexBetween>
-      {/* DESKTOP NAVBAR */}
-      {isNonMobileScreens ? (
-        <FlexBetween gap="2rem">
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === 'dark' ? (
-              <DarkMode sx={{ fontSize: '25px' }} />
-            ) : (
-              <LightMode sx={{ color: dark, fontSize: '25px' }} />
-            )}
-          </IconButton>
-
-          {/* LANGUAGE TOGGLE */}
-          <FormControl variant="standard" value={t('language')}>
-            <InputLabel htmlFor="language-toggle">{t('language')}</InputLabel>
-            <Select
-              labelId="default-language"
-              id="language-toggle"
-              value={language}
-              onChange={handleChange}
-              sx={{
-                backgroundColor: neutralLight,
-                borderRadius: '0.25rem',
-                p: '0.25rem 1rem',
-                '& .MuiSvgIcon-root': {
-                  pr: '0.25rem',
-                  width: '3rem',
-                },
-                '& .MuiSelect-select:focus': {
-                  backgroundColor: neutralLight,
-                },
-              }}
-              input={<InputBase />}
-            >
-              {languages.map(({ code, name, country_code }) => (
-                <MenuItem
-                  value={code}
-                  key={country_code}
-                  onClick={() => i18next.changeLanguage(code)}
-                >
-                  <span className={`fi fi-${country_code} mx-1`} />
-                  &nbsp;&nbsp;
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <MenuItem onClick={() => navigate('/login')}>{t('login')}</MenuItem>
-          <InstallPrompt />
-        </FlexBetween>
-      ) : (
-        <IconButton
-          onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-        >
-          <Menu />
-        </IconButton>
-      )}
-      {/* MOBILE NAVBAR */}
-      {!isNonMobileScreens && isMobileMenuToggled && (
-        <Box
-          position="fixed"
-          right="0"
-          bottom="0"
-          height="100%"
-          zIndex="10"
-          maxWidth="500px"
-          minWidth="300px"
-          backgroundColor={alt}
-        >
-          {/* CLOSE ICON */}
-          <Box display="flex" justifyContent="flex-end" p="1rem">
-            <IconButton
-              onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-            >
-              <Close />
-            </IconButton>
           </Box>
 
-          {/* MENU ITEMS */}
-          <FlexBetween
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="3rem"
-          >
-            <IconButton
-              onClick={() => dispatch(setMode())}
-              sx={{ fontSize: '25px' }}
-            >
+          {isNonMobileScreens && (
+            <FlexBetween padding="0 1rem">
+              {/* MENU BAR */}
+              <Stack direction="row" spacing={2}>
+                <MenuItem style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
+                  {t('menu_link_services')}
+                </MenuItem>
+                <MenuItem style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
+                  {t('link_apply')}
+                </MenuItem>
+                <MenuItem style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
+                  {t('link_contact')}
+                </MenuItem>
+              </Stack>
+            </FlexBetween>
+          )}
+        </FlexBetween>
+        {/* DESKTOP NAVBAR */}
+        {isNonMobileScreens ? (
+          <FlexBetween gap="2rem">
+            <IconButton onClick={() => dispatch(setMode())}>
               {theme.palette.mode === 'dark' ? (
                 <DarkMode sx={{ fontSize: '25px' }} />
               ) : (
                 <LightMode sx={{ color: dark, fontSize: '25px' }} />
               )}
             </IconButton>
-            <FlexBetween>
-              {/* MENU BAR */}
-              <Stack>
-                <Button style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
-                  OUR SERVICES
-                </Button>
-                <Button style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
-                  APPLY FOR A JOB
-                </Button>
-                <Button style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
-                  CONTACT
-                </Button>
-              </Stack>
-            </FlexBetween>
 
-            {/* ALGUS */}
-            <FormControl variant="standard">
+            {/* LANGUAGE TOGGLE */}
+            <FormControl variant="standard" value={t('language')}>
               <InputLabel htmlFor="language-toggle">{t('language')}</InputLabel>
               <Select
                 labelId="default-language"
@@ -299,7 +197,7 @@ function LandingNavbar() {
                 onChange={handleChange}
                 sx={{
                   backgroundColor: neutralLight,
-                  borderRadius: '4px',
+                  borderRadius: '0.25rem',
                   p: '0.25rem 1rem',
                   '& .MuiSvgIcon-root': {
                     pr: '0.25rem',
@@ -324,17 +222,119 @@ function LandingNavbar() {
                 ))}
               </Select>
             </FormControl>
-            <FormControl variant="standard" value={fullName}>
-              <MenuItem onClick={() => navigate('/login')}>
-                {t('login')}
-              </MenuItem>
-            </FormControl>
-
-            {/* LÕPP */}
+            <MenuItem onClick={() => navigate('/login')}>{t('login')}</MenuItem>
+            <InstallPrompt />
           </FlexBetween>
-        </Box>
-      )}
-    </FlexBetween>
+        ) : (
+          <IconButton
+            onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+          >
+            <Menu />
+          </IconButton>
+        )}
+        {/* MOBILE NAVBAR */}
+        {!isNonMobileScreens && isMobileMenuToggled && (
+          <Box
+            position="fixed"
+            right="0"
+            bottom="0"
+            height="100%"
+            zIndex="10"
+            maxWidth="500px"
+            minWidth="300px"
+            backgroundColor={alt}
+          >
+            {/* CLOSE ICON */}
+            <Box display="flex" justifyContent="flex-end" p="1rem">
+              <IconButton
+                onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+              >
+                <Close />
+              </IconButton>
+            </Box>
+
+            {/* MENU ITEMS */}
+            <FlexBetween
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              gap="3rem"
+            >
+              <IconButton
+                onClick={() => dispatch(setMode())}
+                sx={{ fontSize: '25px' }}
+              >
+                {theme.palette.mode === 'dark' ? (
+                  <DarkMode sx={{ fontSize: '25px' }} />
+                ) : (
+                  <LightMode sx={{ color: dark, fontSize: '25px' }} />
+                )}
+              </IconButton>
+              <FlexBetween>
+                {/* MENU BAR */}
+                <Stack>
+                  <Button style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
+                    OUR SERVICES
+                  </Button>
+                  <Button style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
+                    APPLY FOR A JOB
+                  </Button>
+                  <Button style={{ whiteSpace: 'nowrap' }} href="#text-buttons">
+                    CONTACT
+                  </Button>
+                </Stack>
+              </FlexBetween>
+
+              {/* ALGUS */}
+              <FormControl variant="standard">
+                <InputLabel htmlFor="language-toggle">
+                  {t('language')}
+                </InputLabel>
+                <Select
+                  labelId="default-language"
+                  id="language-toggle"
+                  value={language}
+                  onChange={handleChange}
+                  sx={{
+                    backgroundColor: neutralLight,
+                    borderRadius: '4px',
+                    p: '0.25rem 1rem',
+                    '& .MuiSvgIcon-root': {
+                      pr: '0.25rem',
+                      width: '3rem',
+                    },
+                    '& .MuiSelect-select:focus': {
+                      backgroundColor: neutralLight,
+                    },
+                  }}
+                  input={<InputBase />}
+                >
+                  {languages.map(({ code, name, country_code }) => (
+                    <MenuItem
+                      value={code}
+                      key={country_code}
+                      onClick={() => i18next.changeLanguage(code)}
+                    >
+                      <span className={`fi fi-${country_code} mx-1`} />
+                      &nbsp;&nbsp;
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl variant="standard" value={fullName}>
+                <MenuItem onClick={() => navigate('/login')}>
+                  {t('login')}
+                </MenuItem>
+              </FormControl>
+
+              {/* LÕPP */}
+            </FlexBetween>
+          </Box>
+        )}
+      </FlexBetween>
+    </nav>
   )
 }
 
