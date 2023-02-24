@@ -3,7 +3,8 @@ import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
 import { useNavigate, Link } from 'react-router-dom'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-import Form from './Form'
+import CorporateForm from './CorporateForm'
+import TalentForm from './TalentForm'
 
 function LoginPage() {
   const theme = useTheme()
@@ -64,12 +65,15 @@ function LoginPage() {
             exclusive
             onChange={handleChange}
             aria-label="Platform"
+            variat="small"
+            fullWidth="true"
+            size="small"
           >
             <ToggleButton value="corporate">Corporate</ToggleButton>
             <ToggleButton value="talent">Talent</ToggleButton>
           </ToggleButtonGroup>
         </Box>
-        <Form />
+        {alignment === 'corporate' ? <CorporateForm /> : <TalentForm />}
       </Box>
     </Box>
   )
