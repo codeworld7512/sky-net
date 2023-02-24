@@ -1,7 +1,5 @@
-/** @format */
+function ProfilePage() {
+  return <div>profilepage</div>
+}
 
-const ProfilePage = () => {
-  return <div>profilepage</div>;
-};
-
-export default ProfilePage;
+export default ProfilePage

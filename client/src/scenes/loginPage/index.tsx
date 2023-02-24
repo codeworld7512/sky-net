@@ -1,29 +1,82 @@
-/** @format */
+import React, { useState } from 'react'
+import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
+import { useNavigate, Link } from 'react-router-dom'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import CorporateForm from './CorporateForm'
+import TalentForm from './TalentForm'
 
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import Form from "./Form";
-import { useNavigate, Link } from "react-router-dom";
+function LoginPage() {
+  const theme = useTheme()
+  const navigate = useNavigate()
+  const isNonMobileScreens = useMediaQuery('(min-width: 1000px)')
 
-const LoginPage = () => {
-  const theme = useTheme();
-  const navigate = useNavigate();
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const [alignment, setAlignment] = useState('talent')
+
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    setAlignment(newAlignment)
+  }
+
   return (
     <Box>
       <Box
-        width={isNonMobileScreens ? "50%" : "93%"}
+        width="100%"
+        backgroundColor={theme.palette.background.alt}
+        p="1rem 6%"
+        textAlign="center"
+        display="flex"
+        justifyContent="center"
+      >
+        <Typography
+          fontWeight="bold"
+          fontSize="clamp(1rem, 1.88rem, 2.25rem)"
+          color="primary"
+        >
+          SKY
+        </Typography>
+        <Typography
+          fontWeight="bold"
+          fontSize="clamp(1rem, 1.88rem, 2.25rem)"
+          color="neutral.dark"
+        >
+          NET
+        </Typography>
+      </Box>
+
+      <Box
+        width={isNonMobileScreens ? '50%' : '93%'}
         p="2rem"
         m="2rem auto"
         borderRadius="1.5rem"
         backgroundColor={theme.palette.primary.darkMain}
       >
-        <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-          Welcome to Skynet, the platform for the getting work done!
-        </Typography>
-        <Form />
+        <Box
+          m="2rem auto"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+        >
+          <ToggleButtonGroup
+            color="primary"
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+            aria-label="Platform"
+            variat="small"
+            fullWidth="true"
+            size="small"
+          >
+            <ToggleButton value="corporate">Corporate</ToggleButton>
+            <ToggleButton value="talent">Talent</ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+        {alignment === 'corporate' ? <CorporateForm /> : <TalentForm />}
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

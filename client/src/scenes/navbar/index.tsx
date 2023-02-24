@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from "react";
+import { useState } from 'react'
 import {
   Box,
   Grid,
@@ -12,7 +12,7 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
-} from "@mui/material";
+} from '@mui/material'
 import {
   Search,
   Message,
@@ -22,188 +22,118 @@ import {
   Help,
   Menu,
   Close,
-} from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { setMode, setLogout } from "@/state";
-import { useNavigate, Link } from "react-router-dom";
-import FlexBetween from "@/components/FlexBetween";
-import { ReactComponent as SkynetLogo } from "@/assets/512.svg";
+} from '@mui/icons-material'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { setMode, setLogout } from '@/state'
+import FlexBetween from '@/components/FlexBetween'
+import { ReactComponent as SkynetLogo } from '@/assets/512.svg'
+import InstallPrompt from '@/components/InstallPrompt'
 
-const Navbar = () => {
-  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+function Navbar() {
+  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.user)
+  const isNonMobileScreens = useMediaQuery('(min-width: 1000px)')
+  const { t } = useTranslation()
 
-  const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
-  const dark = theme.palette.neutral.dark;
-  const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
-  const alt = theme.palette.background.alt;
+  const theme = useTheme()
+  const neutralLight = theme.palette.neutral.light
+  const { dark } = theme.palette.neutral
+  const background = theme.palette.background.default
+  const primaryLight = theme.palette.primary.light
+  const { alt } = theme.palette.background
 
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const fullName = `${user.firstName} ${user.lastName}`
 
   return (
-    <FlexBetween padding="0 1rem" backgroundColor={alt}>
-      <FlexBetween gap="1.75rem">
-        <Box sx={{ padding: 1 }}>
-          <Grid container>
-            <Box
-              alignItems="center"
-              display="flex"
-              justifyContent="center"
-              sx={{ paddingTop: 1 }}
-            >
-              <Link onClick={() => navigate("/")}>
-                <SkynetLogo
-                  style={{
-                    fill: theme.palette.neutral.dark,
-                    stroke: theme.palette.neutral.dark,
-                    width: "45px",
-                  }}
-                />
-              </Link>
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="center"
-              sx={{ paddingTop: 0.4 }}
-            >
-              <Typography
-                fontWeight="bold"
-                fontSize="clamp(1rem, 1.95rem, 2.25rem)"
-                color="primary"
-                onClick={() => navigate("/home")}
-                sx={{
-                  "&:hover": {
-                    color: primaryLight,
-                    cursor: "pointer",
-                  },
-                }}
+    <nav>
+      <FlexBetween padding="0 1rem" backgroundColor={alt}>
+        <FlexBetween gap="1.75rem">
+          <Box sx={{ padding: 1 }}>
+            <Grid display="flex" alignItems="center">
+              <Box
+                alignItems="center"
+                display="flex"
+                justifyContent="center"
+                sx={{ paddingTop: 1 }}
               >
-                KYNET
-              </Typography>
-            </Box>
-          </Grid>
-        </Box>
-
-        {isNonMobileScreens && (
-          <FlexBetween
-            backgroundColor={neutralLight}
-            borderRadius="9px"
-            gap="3rem"
-            padding="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
-        )}
-      </FlexBetween>
-
-      {/* DESKTOP NAV */}
-      {isNonMobileScreens ? (
-        <FlexBetween gap="2rem">
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === "dark" ? (
-              <DarkMode sx={{ fontSize: "25px" }} />
-            ) : (
-              <LightMode sx={{ color: dark, fontSize: "25px" }} />
-            )}
-          </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
-          <FormControl variant="standard" value={fullName}>
-            <Select
-              value={fullName}
-              sx={{
-                backgroundColor: neutralLight,
-                borderRadius: "0.25rem",
-                p: "0.25rem 1rem",
-                "& .MuiSvgIcon-root": {
-                  pr: "0.25rem",
-                  width: "3rem",
-                },
-                "& .MuiSelect-select:focus": {
-                  backgroundColor: neutralLight,
-                },
-              }}
-              input={<InputBase />}
-            >
-              <MenuItem value={fullName}>
-                <Typography>{fullName}</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-            </Select>
-          </FormControl>
-        </FlexBetween>
-      ) : (
-        <IconButton
-          onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-        >
-          <Menu />
-        </IconButton>
-      )}
-
-      {/* MOBILE NAV */}
-      {!isNonMobileScreens && isMobileMenuToggled && (
-        <Box
-          position="fixed"
-          right="0"
-          bottom="0"
-          height="100%"
-          zIndex="10"
-          maxWidth="500px"
-          minWidth="300px"
-          backgroundColor={background}
-        >
-          {/* CLOSE ICON */}
-          <Box display="flex" justifyContent="flex-end" p="1rem">
-            <IconButton
-              onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-            >
-              <Close />
-            </IconButton>
+                <Link to="/home">
+                  <SkynetLogo
+                    style={{
+                      fill: theme.palette.neutral.dark,
+                      stroke: theme.palette.neutral.dark,
+                      width: '45px',
+                    }}
+                    onClick={() => navigate('/')}
+                  />
+                </Link>
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="center"
+                sx={{ paddingTop: 0.4 }}
+              >
+                <Typography
+                  fontWeight="bold"
+                  fontSize="clamp(1rem, 1.95rem, 2.25rem)"
+                  color="neutral.dark"
+                  onClick={() => navigate('/home')}
+                  sx={{
+                    '&:hover': {
+                      color: primaryLight,
+                      cursor: 'pointer',
+                    },
+                  }}
+                >
+                  KYNET
+                </Typography>
+              </Box>
+            </Grid>
           </Box>
 
-          {/* MENU ITEMS */}
-          <FlexBetween
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="3rem"
-          >
-            <IconButton
-              onClick={() => dispatch(setMode())}
-              sx={{ fontSize: "25px" }}
+          {isNonMobileScreens && (
+            <FlexBetween
+              backgroundColor={neutralLight}
+              borderRadius="9px"
+              gap="3rem"
+              padding="0.1rem 1.5rem"
             >
-              {theme.palette.mode === "dark" ? (
-                <DarkMode sx={{ fontSize: "25px" }} />
+              <InputBase placeholder="Search..." />
+              <IconButton>
+                <Search />
+              </IconButton>
+            </FlexBetween>
+          )}
+        </FlexBetween>
+
+        {/* DESKTOP NAV */}
+        {isNonMobileScreens ? (
+          <FlexBetween gap="2rem">
+            <IconButton onClick={() => dispatch(setMode())}>
+              {theme.palette.mode === 'dark' ? (
+                <DarkMode sx={{ fontSize: '25px' }} />
               ) : (
-                <LightMode sx={{ color: dark, fontSize: "25px" }} />
+                <LightMode sx={{ color: dark, fontSize: '25px' }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+            <Message sx={{ fontSize: '25px' }} />
+            <Notifications sx={{ fontSize: '25px' }} />
+            <Help sx={{ fontSize: '25px' }} />
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
                 sx={{
                   backgroundColor: neutralLight,
-                  width: "150px",
-                  borderRadius: "0.25rem",
-                  p: "0.25rem 1rem",
-                  "& .MuiSvgIcon-root": {
-                    pr: "0.25rem",
-                    width: "3rem",
+                  borderRadius: '0.25rem',
+                  p: '0.25rem 1rem',
+                  '& .MuiSvgIcon-root': {
+                    pr: '0.25rem',
+                    width: '3rem',
                   },
-                  "& .MuiSelect-select:focus": {
+                  '& .MuiSelect-select:focus': {
                     backgroundColor: neutralLight,
                   },
                 }}
@@ -217,11 +147,90 @@ const Navbar = () => {
                 </MenuItem>
               </Select>
             </FormControl>
+            <InstallPrompt />
           </FlexBetween>
-        </Box>
-      )}
-    </FlexBetween>
-  );
-};
+        ) : (
+          <IconButton
+            onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+          >
+            <Menu />
+          </IconButton>
+        )}
 
-export default Navbar;
+        {/* MOBILE NAV */}
+        {!isNonMobileScreens && isMobileMenuToggled && (
+          <Box
+            position="fixed"
+            right="0"
+            bottom="0"
+            height="100%"
+            zIndex="10"
+            maxWidth="500px"
+            minWidth="300px"
+            backgroundColor={background}
+          >
+            {/* CLOSE ICON */}
+            <Box display="flex" justifyContent="flex-end" p="1rem">
+              <IconButton
+                onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+              >
+                <Close />
+              </IconButton>
+            </Box>
+
+            {/* MENU ITEMS */}
+            <FlexBetween
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              gap="3rem"
+            >
+              <IconButton
+                onClick={() => dispatch(setMode())}
+                sx={{ fontSize: '25px' }}
+              >
+                {theme.palette.mode === 'dark' ? (
+                  <DarkMode sx={{ fontSize: '25px' }} />
+                ) : (
+                  <LightMode sx={{ color: dark, fontSize: '25px' }} />
+                )}
+              </IconButton>
+              <Message sx={{ fontSize: '25px' }} />
+              <Notifications sx={{ fontSize: '25px' }} />
+              <Help sx={{ fontSize: '25px' }} />
+              <FormControl variant="standard" value={fullName}>
+                <Select
+                  value={fullName}
+                  sx={{
+                    backgroundColor: neutralLight,
+                    width: '150px',
+                    borderRadius: '0.25rem',
+                    p: '0.25rem 1rem',
+                    '& .MuiSvgIcon-root': {
+                      pr: '0.25rem',
+                      width: '3rem',
+                    },
+                    '& .MuiSelect-select:focus': {
+                      backgroundColor: neutralLight,
+                    },
+                  }}
+                  input={<InputBase />}
+                >
+                  <MenuItem value={fullName}>
+                    <Typography>{fullName}</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={() => dispatch(setLogout())}>
+                    Log Out
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </FlexBetween>
+          </Box>
+        )}
+      </FlexBetween>
+    </nav>
+  )
+}
+
+export default Navbar
