@@ -26,8 +26,24 @@ export const getUserFriends = async (req, res) => {
     );
     const formattedFriends = friends.map(
       /* We are gonna make sure that we can format this propper way for the front end */
-      ({ _id, firstName, lastName, occupation, location, picturePath }) => {
-        return { _id, firstName, lastName, occupation, location, picturePath };
+      ({
+        _id,
+        firstName,
+        lastName,
+        occupation,
+        userType,
+        location,
+        picturePath,
+      }) => {
+        return {
+          _id,
+          firstName,
+          lastName,
+          occupation,
+          userType,
+          location,
+          picturePath,
+        };
       }
     );
     res.status(200).json(formattedFriends);
@@ -60,8 +76,28 @@ export const addRemoveFriend = async (req, res) => {
       user.friends.map((id) => User.findById(id))
     );
     const formattedFriends = friends.map(
-      ({ _id, firstName, lastName, occupation, location, picturePath }) => {
-        return { _id, firstName, lastName, occupation, location, picturePath };
+      ({
+        _id,
+        firstName,
+        lastName,
+        occupation,
+        userType,
+        companyName,
+        industry,
+        location,
+        picturePath,
+      }) => {
+        return {
+          _id,
+          firstName,
+          lastName,
+          occupation,
+          userType,
+          companyName,
+          industry,
+          location,
+          picturePath,
+        };
       }
     );
 

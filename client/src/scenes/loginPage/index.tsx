@@ -1,24 +1,12 @@
 import React, { useState } from 'react'
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
 import { useNavigate, Link } from 'react-router-dom'
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-import CorporateForm from './CorporateForm'
-import TalentForm from './TalentForm'
+import Form from './Form'
 
 function LoginPage() {
   const theme = useTheme()
   const navigate = useNavigate()
   const isNonMobileScreens = useMediaQuery('(min-width: 1000px)')
-
-  const [alignment, setAlignment] = useState('talent')
-
-  const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
-  ) => {
-    setAlignment(newAlignment)
-  }
 
   return (
     <Box>
@@ -53,27 +41,7 @@ function LoginPage() {
         borderRadius="1.5rem"
         backgroundColor={theme.palette.primary.darkMain}
       >
-        <Box
-          m="2rem auto"
-          alignItems="center"
-          justifyContent="center"
-          textAlign="center"
-        >
-          <ToggleButtonGroup
-            color="primary"
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-            aria-label="Platform"
-            variat="small"
-            fullWidth="true"
-            size="small"
-          >
-            <ToggleButton value="corporate">Corporate</ToggleButton>
-            <ToggleButton value="talent">Talent</ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
-        {alignment === 'corporate' ? <CorporateForm /> : <TalentForm />}
+        <Form />
       </Box>
     </Box>
   )

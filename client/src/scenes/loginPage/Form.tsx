@@ -6,6 +6,8 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import { Formik } from 'formik'
@@ -24,6 +26,15 @@ const registerSchema = yup.object().shape({
   location: yup.string().required('required'),
   occupation: yup.string().required('required'),
   picture: yup.string().required('required'),
+  userType: yup.string().oneOf(['corporate', 'talent']).required('required'),
+  companyName: yup.string().when('userType', {
+    is: 'corporate',
+    then: yup.string().required('required'),
+  }),
+  industry: yup.string().when('userType', {
+    is: 'corporate',
+    then: yup.string().required('required'),
+  }),
 })
 
 const loginSchema = yup.object().shape({
@@ -39,6 +50,9 @@ const initialValuesRegister = {
   location: '',
   occupation: '',
   picture: '',
+  userType: 'talent',
+  companyName: '',
+  industry: '',
 }
 
 const initialValuesLogin = {
@@ -48,12 +62,14 @@ const initialValuesLogin = {
 
 function Form() {
   const [pageType, setPageType] = useState('login')
+  const [userType, setUserType] = useState('talent')
   const { palette } = useTheme()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const isNonMobile = useMediaQuery('(min-width:600px)')
   const isLogin = pageType === 'login'
   const isRegister = pageType === 'register'
+  const isCorporate = userType === 'corporate'
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
@@ -62,6 +78,7 @@ function Form() {
       formData.append(value, values[value])
     }
     formData.append('picturePath', values.picture.name)
+    formData.append('userType', userType)
 
     const savedUserResponse = await fetch(
       'http://localhost:3001/auth/register',
@@ -102,6 +119,10 @@ function Form() {
     if (isRegister) await register(values, onSubmitProps)
   }
 
+  const handleUserTypeChange = (event, newType) => {
+    setUserType(newType)
+  }
+
   return (
     <Formik
       onSubmit={handleFormSubmit}
@@ -113,9 +134,9 @@ function Form() {
         errors,
         touched,
         handleBlur,
-        handleChange,
         handleSubmit,
         setFieldValue,
+        handleChange,
         resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
@@ -129,6 +150,54 @@ function Form() {
           >
             {isRegister && (
               <>
+                <Box
+                  m="2rem auto"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                  gridColumn="span 4"
+                >
+                  <ToggleButtonGroup
+                    color="primary"
+                    value={userType}
+                    exclusive
+                    onChange={handleUserTypeChange}
+                    aria-label="User Type"
+                    variant="small"
+                    size="small"
+                  >
+                    <ToggleButton value="corporate" name="corporate">
+                      Corporate
+                    </ToggleButton>
+                    <ToggleButton value="talent" name="talent">
+                      Talent
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Box>
+                {isCorporate && (
+                  <>
+                    <TextField
+                      label="Company Name"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.companyName}
+                      name="companyName"
+                      error={Boolean(touched.companyName && errors.companyName)}
+                      helperText={touched.companyName && errors.companyName}
+                      sx={{ gridColumn: 'span 4' }}
+                    />
+                    <TextField
+                      label="Industry"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.industry}
+                      name="industry"
+                      error={Boolean(touched.industry && errors.industry)}
+                      helperText={touched.industry && errors.industry}
+                      sx={{ gridColumn: 'span 4' }}
+                    />
+                  </>
+                )}
                 <TextField
                   label="First Name"
                   onBlur={handleBlur}
