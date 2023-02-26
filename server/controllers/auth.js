@@ -17,6 +17,9 @@ export const register = async (req, res) => {
       friends,
       location,
       occupation,
+      userType,
+      companyName,
+      industry,
     } =
       req.body; /* From this we are gonna send these values to the database. */
 
@@ -30,6 +33,7 @@ export const register = async (req, res) => {
     const newUser = new User({
       /* This line of code is creating a new user. The way that this thing works is that we are gonna encrypt the password, we are gonna save it and after we save it
     when the user tries to login , thay are gonna provide the password and we arve gonna salt that again and then we are gonna make sure thats the correct one. Then we are gonna give them the JSONwebtoken */
+
       firstName,
       lastName,
       email,
@@ -38,6 +42,9 @@ export const register = async (req, res) => {
       friends,
       location,
       occupation,
+      userType,
+      companyName,
+      industry,
       viewedProfile: Math.floor(Math.random() * 10000),
       impressions: Math.floor(Math.random() * 10000),
     });
@@ -69,11 +76,9 @@ export const login = async (req, res) => {
       user.password
     ); /* This is gonna determine, if we have the right password. We do this by comparing "(password -> user.password)", using the same salt to compare */
     if (!isMatch)
-      return res
-        .status(400)
-        .json({
-          msg: "Invalid credentials. ",
-        }); /* If the password is not a match, we are gonna send a message to the front end. */
+      return res.status(400).json({
+        msg: "Invalid credentials. ",
+      }); /* If the password is not a match, we are gonna send a message to the front end. */
 
     const token = jwt.sign(
       { id: user._id },
@@ -82,10 +87,8 @@ export const login = async (req, res) => {
     delete user.password; /* This is gonna delete the password from the user, so that we are not sending the password to the front end for security reasons. */
     res.status(200).json({ token, user });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        error: err.message,
-      }); /* In the future you should customize this error message. */
+    res.status(500).json({
+      error: err.message,
+    }); /* In the future you should customize this error message. */
   }
 };
